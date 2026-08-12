@@ -19,8 +19,7 @@ Developed by **[FauxGUY](https://github.com/FauxGUY)**.
 
 ## 📥 Download
 
-[**⬇️ Download the latest release**](https://github.com/FauxGUY/YOUR_REPO_NAME/releases/latest)
-
+[**⬇️ Download the latest release**](https://github.com/FauxGUY/ZingerBurger/releases/latest)
 ## 🚀 Installation & Usage
 
 1. Download the latest `.zip` release and extract it to a folder.
