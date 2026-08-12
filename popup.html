@@ -1,0 +1,212 @@
+<!-- ==========================================
+ * ZINGERBURGER AI WEBTOON STUDIO
+ * Created by FauxGUY (https://github.com/FauxGUY)
+ * 
+ * WARNING: PROTECTED FILE. 
+ * DO NOT EDIT WITHOUT AUTHORIZATION.
+ * ========================================== -->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="popup.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <img src="icons/icon128.png" alt="ZingerBurger Logo" class="brand-icon-img" />
+        <div class="brand-text">
+          <h1>ZingerBurger</h1>
+          <span class="subtitle">AI Webtoon Studio</span>
+        </div>
+      </div>
+      <span class="version-pill">v3.0</span>
+    </header>
+
+    <!-- Instructions -->
+    <details class="card instructions-card">
+      <summary>
+        <span class="card-icon">💡</span>
+        How to Use ZingerBurger
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="details-body instructions-body">
+        <ol>
+          <li><strong>Open Flow:</strong> Click "Open Flow" to sign in and open your Google Flow project. The dot must be <span style="color:var(--green)">green</span>.</li>
+          <li><strong>Input:</strong> Type a Title and paste your Chapter Text, OR upload .txt files for batch processing.</li>
+          <li><strong>Settings:</strong> Select your preferred aspect ratio and generation mode (Parallel is faster).</li>
+          <li><strong>Generate:</strong> Click <b>▶ Generate</b>. Gemini will plan the storyboard, and Flow will generate the images automatically.</li>
+          <li><strong>Download:</strong> Hover over any finished panel to download it individually. When the chapter finishes, a full ZIP and PDF will download automatically.</li>
+        </ol>
+      </div>
+    </details>
+
+    <!-- Chapter Input -->
+    <section class="card">
+      <div class="card-header">
+        <span class="card-icon">📖</span>
+        <span>Chapter Input</span>
+      </div>
+      <div class="group">
+        <label>Title</label>
+        <input id="title" type="text" placeholder="Chapter 1 - The Beginning" />
+      </div>
+      <div class="group">
+        <label>Chapter Text</label>
+        <textarea id="text" placeholder="Paste your chapter text here..." rows="4"></textarea>
+        <div class="file-row">
+          <input id="file" type="file" accept=".txt,text/plain" multiple />
+          <span class="hint">Upload .txt — multiple files = batch mode</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Generation Settings -->
+    <section class="card">
+      <div class="card-header">
+        <span class="card-icon">⚙️</span>
+        <span>Generation Settings</span>
+      </div>
+
+      <div class="settings-grid">
+        <div class="group">
+          <label>Model</label>
+          <select id="imageModel" class="select-input">
+            <option value="GEM_PIX_2">Nano Banana Pro</option>
+            <option value="NARWHAL">Nano Banana 2</option>
+            <option value="HARBOR_SEAL">Nano Banana 2 Lite</option>
+          </select>
+        </div>
+        <div class="group">
+          <label>Aspect Ratio</label>
+          <select id="aspectRatio" class="select-input">
+            <option value="IMAGE_ASPECT_RATIO_PORTRAIT">9:16 Portrait</option>
+            <option value="IMAGE_ASPECT_RATIO_PORTRAIT_THREE_FOUR">3:4 Portrait</option>
+            <option value="IMAGE_ASPECT_RATIO_SQUARE">1:1 Square</option>
+            <option value="IMAGE_ASPECT_RATIO_LANDSCAPE_FOUR_THREE">4:3 Landscape</option>
+            <option value="IMAGE_ASPECT_RATIO_LANDSCAPE">16:9 Landscape</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="group">
+        <label>Generation Mode</label>
+        <div class="mode-toggle">
+          <label class="toggle-option">
+            <input type="radio" name="generationMode" value="sequential" checked />
+            <div class="toggle-content">
+              <strong>Sequential</strong>
+              <small>One at a time, retries on fail</small>
+            </div>
+          </label>
+          <label class="toggle-option">
+            <input type="radio" name="generationMode" value="parallel" />
+            <div class="toggle-content">
+              <strong>Parallel</strong>
+              <small>Up to 4 at once, faster</small>
+            </div>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Flow Connection -->
+    <section class="card connection-card">
+      <div class="connection-row">
+        <span id="flowDot" class="dot"></span>
+        <span id="flowStatus" class="connection-label">Checking Flow…</span>
+        <button id="openFlow" class="btn-sm" type="button">Open Flow</button>
+      </div>
+      <div class="group" id="gemUrlGroup">
+        <label>Gemini Gem URL <span class="hint">(Optional)</span></label>
+        <input id="gemUrl" type="text" placeholder="https://gemini.google.com/app/..." />
+      </div>
+    </section>
+
+    <!-- Advanced Settings -->
+    <details class="card">
+      <summary>
+        <span class="card-icon">🎨</span>
+        Advanced Art & Style
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="details-body">
+        <div class="group">
+          <label>Style Prompt</label>
+          <textarea id="style" rows="3" placeholder="Custom art style prompt..."></textarea>
+        </div>
+        <div class="group">
+          <label>Built-in Style Reference</label>
+          <div class="style-preview">
+            <img src="assets/lotm_style_reference.png" alt="LOTM style" />
+            <span>Bundled LOTM reference — auto-attached to every panel</span>
+          </div>
+        </div>
+        <div class="group">
+          <label>Additional Style Image</label>
+          <div class="file-row">
+            <input id="styleFile" type="file" accept="image/*" />
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button id="go" class="btn-primary">
+        <span>▶</span> Generate
+      </button>
+      <button id="resume" class="btn-secondary">
+        <span>⏩</span> Resume
+      </button>
+      <button id="stop" class="btn-danger">
+        <span>⏹</span> Stop
+      </button>
+    </div>
+
+    <!-- Live Generation -->
+    <section class="card live-section">
+      <div class="live-header">
+        <div>
+          <span class="live-badge">LIVE</span>
+          <strong>Generation Progress</strong>
+        </div>
+        <span id="queueSummary" class="queue-badge">Waiting</span>
+      </div>
+      <div class="progress-track"><div id="progressBar"></div></div>
+      <div id="currentGeneration" class="current-gen empty">
+        <div class="current-placeholder">Panels will appear here once generation starts.</div>
+      </div>
+      <div class="queue-header">
+        <span>Panel Queue</span>
+        <span id="queueCounts">0 queued · 0 done</span>
+      </div>
+      <div id="queueList" class="queue-grid">
+        <div class="queue-empty">Queue appears after storyboard is ready.</div>
+      </div>
+    </section>
+
+    <!-- Status & Logs -->
+    <section class="card status-card">
+      <div id="status" class="status-line">Idle. Ready to generate.</div>
+      <pre id="log">Logs appear here...</pre>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <span>Built by <a href="https://github.com/FauxGUY" target="_blank" rel="noopener">FauxGUY</a></span>
+      <span class="sep">·</span>
+      <span>ZingerBurger v3.0</span>
+    </footer>
+
+    <!-- Image Preview Overlay -->
+    <div id="imagePreview" class="preview-overlay" hidden>
+      <button id="closePreview" class="preview-close" type="button" aria-label="Close">✕</button>
+      <img id="previewImage" alt="Panel preview" />
+      <div id="previewCaption" class="preview-caption"></div>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
