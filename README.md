@@ -19,7 +19,10 @@ Developed by **[FauxGUY](https://github.com/FauxGUY)**.
 
 ## 📥 Download
 
-[**⬇️ Download the latest release**]([[https://github.com/FauxGUY/ZingerBurger/releases/latest](https://github.com/FauxGUY/zingerBurger-novel-to-visuals-maker-using-flow-/releases/tag/v1.0.0](https://github.com/FauxGUY/zingerBurger-novel-to-visuals-maker-using-flow-/releases)))
+## 📥 Download
+
+[**⬇️ Download the latest version of ZingerBurger**](https://github.com/FauxGUY/zingerBurger-novel-to-visuals-maker-using-flow-/releases/latest)
+
 ## 🚀 Installation & Usage
 
 1. Download the latest `.zip` release and extract it to a folder.
